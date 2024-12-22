@@ -1,4 +1,55 @@
 
+    post:
+      summary: "Create a new trail"
+      operationId: "Trail.Create"
+      requestBody:
+        required: true
+        x-body-name: "Trail"
+        content:
+          application/json:
+            schema:
+              
+              $ref: "#/components/schemas/Trail"
+      responses:
+        '201':
+          description: "Trail created"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Name:
+                    type: string
+        '400':
+          description: "Invalid input"
+        '500':
+          description: "Internal server error"
+
+ #Fetch requests         
+  /trails/{trailId}:
+    get:
+      operationId: "Trail.ReadOne"
+      summary: "Get a trail by ID"
+      parameters:
+        - name: "trailId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+          description: "ID of the trail to get"
+      responses:
+        '200':
+          description: "Trail found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Trail"
+        '404':
+          description: "Trail not found"          
+  
+        
+
+
  
   /trails/{trailId}:
     get:

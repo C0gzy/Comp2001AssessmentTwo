@@ -1,18 +1,15 @@
 
-TRAILS = {
-    "Trail1": {
-        "Name": "Trail1",
-        "Length": 5,
-        "Difficulty": "Easy",
-        "Type": "Loop",
-        "Location": "Park1",
-    }
-}
+from flask import make_response , abort
+
+from config import db
+from models import Trail , Trail_Schema , Trails_Schema
 
 
 def ReadAll():
-    return list(TRAILS.values())
+    READTRAILS = Trail.query.all()
+    return Trails_Schema.dump(READTRAILS), 200
 
+"""
 def Create(Trail):
     Tname = Trail.get("Name")
 
@@ -34,3 +31,4 @@ def ReadOne(trailId):
         return TRAILS[trailId] , 200
     else:
         return NULL , 404
+"""
