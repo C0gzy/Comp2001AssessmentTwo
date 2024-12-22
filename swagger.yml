@@ -1,0 +1,94 @@
+openapi: 3.0.0
+info:
+  title: "Comp2001 AssessmentTwo"
+  description: "An API about Trails"
+  version: "0.1.0"
+servers:
+  - url: "/api"
+
+
+components:
+  schemas:
+    Trail:
+      type: object
+      properties:
+        Id:
+          type: string
+        Name:
+          type: string
+        Difficulty:
+          type: string
+        Length:
+          type: number
+        Location:
+          type: string
+      required:
+        - Name
+        - Difficulty
+        - Length
+        - Location
+
+
+paths:
+  /trails:
+    get:
+      operationId: "Trail.ReadAll"
+      summary: "Get all trails"
+      responses:
+        '200':
+          description: "A list of trails"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Trail"
+    post:
+      summary: "Create a new trail"
+      operationId: "Trail.Create"
+      requestBody:
+        required: true
+        x-body-name: "Trail"
+        content:
+          application/json:
+            schema:
+              
+              $ref: "#/components/schemas/Trail"
+      responses:
+        '201':
+          description: "Trail created"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Name:
+                    type: string
+        '400':
+          description: "Invalid input"
+        '500':
+          description: "Internal server error"
+
+ #Fetch requests         
+  /trails/{trailId}:
+    get:
+      operationId: "Trail.ReadOne"
+      summary: "Get a trail by ID"
+      parameters:
+        - name: "trailId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+          description: "ID of the trail to get"
+      responses:
+        '200':
+          description: "Trail found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Trail"
+        '404':
+          description: "Trail not found"          
+  
+        

@@ -1,0 +1,59 @@
+
+ 
+  /trails/{trailId}:
+    get:
+      summary: "Get a trail by ID"
+      parameters:
+        - name: "trailId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+          description: "ID of the trail to get"
+      responses:
+        '200':
+          description: "Trail found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Trail"
+        '404':
+          description: "Trail not found"
+    put:
+      summary: "Update a trail by ID"
+      parameters:
+        - name: "trailId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+          description: "ID of the trail to update"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Trail"
+      responses:
+        '200':
+          description: "Trail updated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Trail"
+        '404':
+          description: "Trail not found"
+    delete:
+      summary: "Delete a trail by ID"
+      parameters:
+        - name: "trailId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+          description: "ID of the trail to delete"
+      responses:
+        '204':
+          description: "Trail deleted"
+        '404':
+          description: "Trail not found"
