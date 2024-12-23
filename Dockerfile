@@ -11,6 +11,7 @@ RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
   && echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile \
   && echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
 
+ADD app.py ./app.py
 COPY . .
 
 RUN pip install --upgrade pip
@@ -20,4 +21,4 @@ RUN apt-get -y clean
 
 EXPOSE 3000
 
-CMD ["python", "app.py"]
+CMD ["python","./app.py"]

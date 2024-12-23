@@ -1,4 +1,10 @@
-connexion==3.1.0
+connexion[flask]==3.1.0
+connexion[swagger-ui]==3.1.0
+connexion[uvicorn]==3.1.0
+pyodbc==5.2.0
 Flask==3.1.0
+sqlalchemy==2.0.36
+marshmallow==3.23.2
 flask_marshmallow==1.2.1
 flask_sqlalchemy==3.1.1
+marshmallow-sqlalchemy==1.1.0

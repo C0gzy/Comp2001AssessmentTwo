@@ -2,7 +2,7 @@
 from flask import make_response , abort
 
 from config import db
-from models import Trail , Trail_Schema , Trails_Schema
+from models import Trail , Trails_Schema , Trail_Schema 
 
 
 def ReadAll():

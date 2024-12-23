@@ -12,27 +12,49 @@ components:
     Trail:
       type: object
       properties:
-        Id:
+        Trailid:
+          type: integer
+          description: "Unique identifier for the trail."
+        TrailName:
           type: string
-        Name:
+          maxLength: 128
+          description: "Name of the trail."
+        TrailOwnerId:
+          type: integer
+          description: "Identifier for the owner of the trail."
+        TrailElevationgain:
+          type: integer
+          description: "Elevation gain of the trail in meters."
+        TrailImageFileLocation:
           type: string
-        Difficulty:
-          type: string
-        Length:
+          maxLength: 512
+          description: "File location or URL for the trail's image."
+        TrailLength:
           type: number
-        Location:
+          format: float
+          description: "Length of the trail in kilometers."
+        TrailRouteType:
           type: string
+          maxLength: 64
+          description: "Type of the trail route (e.g., loop, out-and-back)."
+        TrailDescription:
+          type: string
+          maxLength: 512
+          description: "Detailed description of the trail."
+        TrailStartingPointid:
+          type: integer
+          description: "Identifier for the starting point of the trail."
       required:
-        - Name
-        - Difficulty
-        - Length
-        - Location
+        - TrailName
+        - TrailLength
+        - TrailRouteType
+        - TrailDescription
 
 
 paths:
   /trails:
     get:
-      operationId: "Trail.ReadAll"
+      operationId: "TrailHandler.ReadAll"
       summary: "Get all trails"
       responses:
         '200':
