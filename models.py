@@ -24,6 +24,12 @@ class User(db.Model):
     Password = db.Column(db.String(32))
     UserPermissionLevel = db.Column(db.Integer)
 
+    trails = db.relationship(
+        Trail, 
+        backref="USERS", 
+        
+        )
+
 
 class TrailSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
