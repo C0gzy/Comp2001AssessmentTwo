@@ -9,23 +9,26 @@ def ReadAll():
     READTRAILS = Trail.query.all()
     return Trails_Schema.dump(READTRAILS), 200
 
+
+def Create(NewTrail):
+
+    AlreadyExists = Trail.query.filter(Trail.TrailName == NewTrail.get("TrailName")).one_or_none()
+
+    if AlreadyExists is None:
+        NewTrail = Trail_Schema.load(NewTrail, session=db.session)
+        db.session.add(NewTrail)
+        db.session.flush()
+        db.session.commit()
+        return NewTrail.TrailId , 201
+    else:
+        abort(406, "Trail already exists")
+
+    return NULL , 500
+
+
+    
+
 """
-def Create(Trail):
-    Tname = Trail.get("Name")
-
-
-    TRAILS[Tname] = {
-        "Name": Tname,
-        "Length": Trail.get("Length"),
-        "Difficulty": Trail.get("Difficulty"),
-        "Type": Trail.get("Type"),
-        "Location": Trail.get("Location"),
-    }
-
-    reponse = {"Name": Tname}
-
-    return reponse , 201
-
 def ReadOne(trailId):
     if trailId in TRAILS:
         return TRAILS[trailId] , 200

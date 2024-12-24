@@ -1,29 +1,5 @@
 
-    post:
-      summary: "Create a new trail"
-      operationId: "Trail.Create"
-      requestBody:
-        required: true
-        x-body-name: "Trail"
-        content:
-          application/json:
-            schema:
-              
-              $ref: "#/components/schemas/Trail"
-      responses:
-        '201':
-          description: "Trail created"
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  Name:
-                    type: string
-        '400':
-          description: "Invalid input"
-        '500':
-          description: "Internal server error"
+
 
  #Fetch requests         
   /trails/{trailId}:
