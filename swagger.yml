@@ -70,7 +70,7 @@ paths:
       operationId: "TrailHandler.Create"
       requestBody:
         required: true
-        x-body-name: "Trail"
+        x-body-name: "NewTrail"
         content:
           application/json:
             schema:

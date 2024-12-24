@@ -10,7 +10,7 @@ def ReadAll():
     return Trails_Schema.dump(READTRAILS), 200
 
 def ReadOne(trailId):
-    ReadTrail = Trail.query.filter(Trail.TrailId == trailId).one_or_none()
+    ReadTrail = Trail.query.filter(Trail.Trailid == trailId).one_or_none()
     if ReadTrail:
         return Trail_Schema.dump(ReadTrail) , 200
     else:
@@ -31,7 +31,7 @@ def Create(NewTrail):
 
     return NULL , 500
 
-def Delte(trailId):
+def Delete(trailId):
     TrailToDelete = Trail.query.filter(Trail.TrailId == trailId).one_or_none()
 
     if TrailToDelete:
