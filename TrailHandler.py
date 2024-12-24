@@ -9,6 +9,12 @@ def ReadAll():
     READTRAILS = Trail.query.all()
     return Trails_Schema.dump(READTRAILS), 200
 
+def ReadOne(trailId):
+    ReadTrail = Trail.query.filter(Trail.TrailId == trailId).one_or_none()
+    if ReadTrail:
+        return Trail_Schema.dump(ReadTrail) , 200
+    else:
+        return NULL , 404
 
 def Create(NewTrail):
 
@@ -19,19 +25,18 @@ def Create(NewTrail):
         db.session.add(NewTrail)
         db.session.flush()
         db.session.commit()
-        return NewTrail.TrailId , 201
+        return NewTrail.Trailid , 201
     else:
         abort(406, "Trail already exists")
 
     return NULL , 500
 
+def Delte(trailId):
+    TrailToDelete = Trail.query.filter(Trail.TrailId == trailId).one_or_none()
 
-    
-
-"""
-def ReadOne(trailId):
-    if trailId in TRAILS:
-        return TRAILS[trailId] , 200
+    if TrailToDelete:
+        db.session.delete(TrailToDelete)
+        db.session.commit()
+        return "Trail "+TrailToDelete.Trailid+" Successfully delted" , 200
     else:
-        return NULL , 404
-"""
+        abort(404, "Trail not found")

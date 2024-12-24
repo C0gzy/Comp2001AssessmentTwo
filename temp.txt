@@ -1,27 +1,7 @@
 
 
 
- #Fetch requests         
-  /trails/{trailId}:
-    get:
-      operationId: "Trail.ReadOne"
-      summary: "Get a trail by ID"
-      parameters:
-        - name: "trailId"
-          in: "path"
-          required: true
-          schema:
-            type: "string"
-          description: "ID of the trail to get"
-      responses:
-        '200':
-          description: "Trail found"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Trail"
-        '404':
-          description: "Trail not found"          
+     
   
         
 
