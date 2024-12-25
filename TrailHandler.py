@@ -19,13 +19,27 @@ def ReadOne(trailId):
 def Create(NewTrail):
 
     AlreadyExists = Trail.query.filter(Trail.TrailName == NewTrail.get("TrailName")).one_or_none()
+    
 
     if AlreadyExists is None:
-        NewTrail = Trail_Schema.load(NewTrail, session=db.session)
+        NewTrail = Trail(
+            Trailid=None,
+            TrailName=NewTrail.get("TrailName"),
+            TrailOwnerId=NewTrail.get("TrailOwnerId"),
+            TrailElevationgain=NewTrail.get("TrailElevationgain"),
+            TrailImageFileLocation=NewTrail.get("TrailImageFileLocation"),
+            TrailLength=NewTrail.get("TrailLength"),
+            TrailRouteType=NewTrail.get("TrailRouteType"),
+            TrailDescription=NewTrail.get("TrailDescription"),
+            TrailStartingPointid=NewTrail.get("TrailStartingPointid")
+        )
         db.session.add(NewTrail)
         db.session.flush()
+        print(NewTrail.Trailid)
         db.session.commit()
-        return NewTrail.Trailid , 201
+        
+
+        return {"Trailid": NewTrail.Trailid} , 201
     else:
         abort(406, "Trail already exists")
 

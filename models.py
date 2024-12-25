@@ -37,6 +37,7 @@ class TrailSchema(ma.SQLAlchemyAutoSchema):
         load_instance = True
         sqla_session = db.session
         include_relationships = True
+        include_fk = True
         
 
 Trail_Schema = TrailSchema()
