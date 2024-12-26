@@ -49,6 +49,32 @@ components:
         - TrailLength
         - TrailRouteType
         - TrailDescription
+    User:
+      type: object
+      properties:
+        Userid:
+          type: integer
+          description: "Unique identifier for the user."
+        username:
+          type: string
+          maxLength: 128
+          description: "Name of the user."
+        Email:
+          type: string
+          maxLength: 128
+          description: "Email address of the user."
+        Password:
+          type: string
+          maxLength: 32
+          description: "Password of the user."
+        UserPermissionLevel:
+          type: integer
+          description: "Permission level of the user."
+      required:
+        - username
+        - Email
+        - Password
+        - UserPermissionLevel
 
 
 paths:
@@ -56,6 +82,8 @@ paths:
     get:
       operationId: "TrailHandler.ReadAll"
       summary: "Get all trails"
+      tags:
+        - "trails"
       responses:
         '200':
           description: "A list of trails"
@@ -68,6 +96,8 @@ paths:
     post:
       summary: "Create a new trail"
       operationId: "TrailHandler.Create"
+      tags:
+        - "trails"
       requestBody:
         required: true
         x-body-name: "NewTrail"
@@ -98,6 +128,8 @@ paths:
     get:
       operationId: "TrailHandler.ReadOne"
       summary: "Get a trail by ID"
+      tags:
+        - "trails"
       parameters:
         - name: "trailId"
           in: "path"
@@ -119,6 +151,8 @@ paths:
     delete:
       summary: "Delete a trail by ID"
       operationId: "TrailHandler.Delete"
+      tags:
+        - "trails"
       parameters:
         - name: "trailId"
           in: "path"
@@ -132,3 +166,86 @@ paths:
         '404':
           description: "Trail not found"
   
+  /users:
+    get:
+      operationId: "UserHandler.ReadAll"
+      summary: "Get all users"
+      tags:
+        - "users"
+      responses:
+        '200':
+          description: "A list of users"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/User"
+    post:
+      summary: "Create a new user"
+      operationId: "UserHandler.Create"
+      tags:
+        - "users"
+      requestBody:
+        required: true
+        x-body-name: "NewUser"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        '201':
+          description: "User created"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Name:
+                    type: string
+        '400':
+          description: "Invalid input"
+        '406':
+          description: "User Already Exists"
+        '500':
+          description: "Internal server error"  
+
+  /users/{userId}:
+    get:
+      operationId: "UserHandler.ReadOne"
+      summary: "Get a user by ID"
+      tags:
+        - "users"
+      parameters:
+        - name: "userId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+          description: "ID of the user to get"
+      responses:
+        '200':
+          description: "User found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        '404':
+          description: "User not found"
+    delete:
+      summary: "Delete a user by ID"
+      operationId: "UserHandler.Delete"
+      tags:
+        - "users"
+      parameters:
+        - name: "userId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+          description: "ID of the user to delete"
+      responses:
+        '200':
+          description: "User deleted"
+        '404':
+          description: "User not found"

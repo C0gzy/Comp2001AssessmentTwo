@@ -20,7 +20,6 @@ def Create(NewTrail):
 
     AlreadyExists = Trail.query.filter(Trail.TrailName == NewTrail.get("TrailName")).one_or_none()
     
-
     if AlreadyExists is None:
         NewTrail = Trail(
             Trailid=None,
@@ -51,6 +50,6 @@ def Delete(trailId):
     if TrailToDelete:
         db.session.delete(TrailToDelete)
         db.session.commit()
-        return "Trail "+TrailToDelete.Trailid+" Successfully delted" , 200
+        return "Trail "+ str(TrailToDelete.Trailid) +" Successfully delted" , 200
     else:
         abort(404, "Trail not found")

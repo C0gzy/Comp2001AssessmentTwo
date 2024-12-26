@@ -39,6 +39,16 @@ class TrailSchema(ma.SQLAlchemyAutoSchema):
         include_relationships = True
         include_fk = True
         
+class UserSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = User
+        load_instance = True
+        sqla_session = db.session
+        include_relationships = True
+
 
 Trail_Schema = TrailSchema()
 Trails_Schema = TrailSchema(many=True)
+
+User_Schema = UserSchema()
+Users_Schema = UserSchema(many=True)
