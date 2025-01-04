@@ -1,9 +1,13 @@
-from flask import make_response , abort
+from flask import make_response , abort , request
 
 from config import db
 from models import User , Users_Schema , User_Schema 
 
+from AuthHandler import Userlogin
+
 def ReadAll():
+
+
     READUSERS= User.query.all()
     return Users_Schema.dump(READUSERS), 200
 
@@ -48,3 +52,7 @@ def Delete(userId):
         return "User " + str(UserToDelete.Userid) + " Successfully delted" , 200
     else:
         abort(404, "User not found")
+
+
+
+   

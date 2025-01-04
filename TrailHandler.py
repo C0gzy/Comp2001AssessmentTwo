@@ -1,11 +1,16 @@
 
-from flask import make_response , abort
+from flask import make_response , abort , request
 
 from config import db
 from models import Trail , Trails_Schema , Trail_Schema 
+from AuthHandler import Userlogin
 
 
 def ReadAll():
+    login_header = request.headers.get("LoginData")
+    if not login_header or Userlogin(login_header) == False:
+        abort(401, "Not authenticated")
+    
     READTRAILS = Trail.query.all()
     return Trails_Schema.dump(READTRAILS), 200
 

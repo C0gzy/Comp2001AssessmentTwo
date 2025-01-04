@@ -7,6 +7,7 @@ servers:
   - url: "/api"
 
 
+
 components:
   schemas:
     Trail:
@@ -75,11 +76,34 @@ components:
         - Email
         - Password
         - UserPermissionLevel
+    Userlogin:
+      type: object
+      properties:
+        Email:
+          type: string
+          maxLength: 128
+          description: "Email address of the user."
+        Password:
+          type: string
+          maxLength: 32
+          description: "Password of the user."
+      required:
+        - Email
+        - Password
+
 
 
 paths:
   /trails:
     get:
+      parameters:
+        - name: "LoginData"
+          in: "header"
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Userlogin"
       operationId: "TrailHandler.ReadAll"
       summary: "Get all trails"
       tags:
@@ -209,6 +233,7 @@ paths:
           description: "User Already Exists"
         '500':
           description: "Internal server error"  
+
 
   /users/{userId}:
     get:
