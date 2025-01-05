@@ -181,7 +181,194 @@ Accepted Auth Logins
     ```
 ### User
 
-- http://localhost:3000/api/users
-- http://localhost:3000/api/users/1
+### 1. Get All Users
+- **URL**: `/api/users`
+- **Method**: `GET`
+- **Parameters**: `Login Credentials` in Header (optional)
+- **Description**: Retrieve a list of all Users.
+- **Response**:
+  - **200 OK**: Returns a JSON array of User objects.
+  - **Example Response**:
+    ```json
+    [
+      {
+        "Userid": 1,
+        "username": "john_doe",
+        "Email": "john@example.com",
+        "UserPermissionLevel": 1
+      },
+      ...
+    ]
+    ```
 
-### TrailPont
+### 2. Get User By ID
+- **URL**: `/api/users/{userId}`
+- **Method**: `GET`
+- **Parameters**:
+  - `Login Credentials` in Header (optional)
+  - `userId`: Integer. The ID of the User to retrieve.
+- **Description**: Retrieve a User by their ID.
+- **Response**:
+  - **200 OK**: Returns a JSON object of the User.
+  - **Example Response**:
+    ```json
+    {
+      "Userid": 1,
+      "username": "john_doe",
+      "Email": "john@example.com",
+      "UserPermissionLevel": 1
+    }
+    ```
+  - **404 Not Found**: Returns an error message if the User is not found.
+
+### 3. Create a User
+- **URL**: `/api/users`
+- **Method**: `POST`
+- **Parameters**: `Login Credentials` in Header (optional)
+- **Description**: Add a new User to the SQL database.
+- **Request Body** (JSON):
+  ```json
+  {
+    "username": "string",
+    "Email": "string",
+    "Password": "string",
+    "UserPermissionLevel": 0
+  }
+  ```
+- **Response**:
+  - **201 Created**: Returns a success message upon creation.
+  - **Example Response**:
+    ```json
+    {
+      "Userid": 1
+    }
+    ```
+  - **406 Not Acceptable**: Returns an error message if the User already exists.
+  - **500 Internal Server Error**: Returns an error message if there is a server error.
+
+### 4. Delete a User
+- **URL**: `/api/users/{userId}`
+- **Method**: `DELETE`
+- **Parameters**:
+  - `Login Credentials` in Header (optional)
+  - `userId`: Integer. The ID of the User to delete.
+- **Description**: Delete a User by their ID.
+- **Response**:
+  - **200 OK**: Returns a success message upon deletion.
+  - **404 Not Found**: Returns an error message if the User is not found.
+  - **Example Response**:
+    ```json
+    {
+      "message": "User 1 Successfully deleted"
+    }
+    ```
+
+### TrailPoint 
+
+### 1. Get All TrailPoints
+- **URL**: `/api/trailpoints`
+- **Method**: `GET`
+- **Description**: Retrieve a list of all TrailPoints.
+- **Response**:
+  - **200 OK**: Returns a JSON array of TrailPoint objects.
+  - **Example Response**:
+    ```json
+    [
+      {
+        "TrailPointid": 1,
+        "TrailPointLatitude": 50.3755,
+        "TrailPointLongitude": -4.1427,
+        "NextTrailPointid": 2
+      },
+      ...
+    ]
+    ```
+
+### 2. Get TrailPoint By ID
+- **URL**: `/api/trailpoints/{trailPointId}`
+- **Method**: `GET`
+- **Parameters**:
+  - `trailPointId`: Integer. The ID of the TrailPoint to retrieve.
+- **Description**: Retrieve a TrailPoint by its ID.
+- **Response**:
+  - **200 OK**: Returns a JSON object of the TrailPoint.
+  - **Example Response**:
+    ```json
+    {
+      "TrailPointid": 1,
+      "TrailPointLatitude": 50.3755,
+      "TrailPointLongitude": -4.1427,
+      "NextTrailPointid": 2
+    }
+    ```
+  - **404 Not Found**: Returns an error message if the TrailPoint is not found.
+
+### 3. Create a TrailPoint
+- **URL**: `/api/trailpoints`
+- **Method**: `POST`
+- **Parameters**: `Login Credentials` in Header (optional)
+- **Description**: Add a new TrailPoint to the SQL database.
+- **Request Body** (JSON):
+  ```json
+  {
+    "TrailPointid": 1,
+    "TrailPointLatitude": 50.3755,
+    "TrailPointLongitude": -4.1427,
+    "NextTrailPointid": 2
+  }
+  ```
+- **Response**:
+  - **201 Created**: Returns a success message upon creation.
+  - **Example Response**:
+    ```json
+    {
+      "TrailPointid": 1
+    }
+    ```
+  - **406 Not Acceptable**: Returns an error message if the TrailPoint already exists.
+  - **500 Internal Server Error**: Returns an error message if there is a server error.
+
+### 4. Update a TrailPoint
+- **URL**: `/api/trailpoints/{trailPointId}`
+- **Method**: `POST`
+- **Parameters**:
+  - `Login Credentials` in Header (optional)
+  - `trailPointId`: Integer. The ID of the TrailPoint to update.
+- **Description**: Update an existing TrailPoint in the SQL database.
+- **Request Body** (JSON):
+  ```json
+  {
+    "TrailPointLatitude": 50.3755,
+    "TrailPointLongitude": -4.1427,
+    "NextTrailPointid": 2
+  }
+  ```
+- **Response**:
+  - **200 OK**: Returns a success message upon update.
+  - **Example Response**:
+    ```json
+    {
+      "TrailPointid": 1,
+      "TrailPointLatitude": 50.3755,
+      "TrailPointLongitude": -4.1427,
+      "NextTrailPointid": 2
+    }
+    ```
+  - **404 Not Found**: Returns an error message if the TrailPoint is not found.
+
+### 5. Delete a TrailPoint
+- **URL**: `/api/trailpoints/{trailPointId}`
+- **Method**: `DELETE`
+- **Parameters**:
+  - `Login Credentials` in Header (optional)
+  - `trailPointId`: Integer. The ID of the TrailPoint to delete.
+- **Description**: Delete a TrailPoint by its ID.
+- **Response**:
+  - **200 OK**: Returns a success message upon deletion.
+  - **404 Not Found**: Returns an error message if the TrailPoint is not found.
+  - **Example Response**:
+    ```json
+    {
+      "message": "TrailPoint with id 1 has been deleted"
+    }
+    ```
