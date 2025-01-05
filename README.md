@@ -188,7 +188,7 @@ Accepted Auth Logins
 - **Description**: Retrieve a list of all Users.
 - **Response**:
   - **200 OK**: Returns a JSON array of User objects.
-  - **Example Response**:
+  - **Authrised Example Response**:
     ```json
     [
       {
@@ -196,6 +196,15 @@ Accepted Auth Logins
         "username": "john_doe",
         "Email": "john@example.com",
         "UserPermissionLevel": 1
+      },
+      ...
+    ]
+    ```
+  - **UnAuthrised Example Response**:
+    ```json
+    [
+      {
+        "username": "john_doe",
       },
       ...
     ]
@@ -210,7 +219,7 @@ Accepted Auth Logins
 - **Description**: Retrieve a User by their ID.
 - **Response**:
   - **200 OK**: Returns a JSON object of the User.
-  - **Example Response**:
+  - **Authrised Example Response**:
     ```json
     {
       "Userid": 1,
@@ -219,12 +228,22 @@ Accepted Auth Logins
       "UserPermissionLevel": 1
     }
     ```
+  - **unAuthrised Example Response**:
+    ```json
+    [
+      {
+        "Userid": 1,
+        "username": "john_doe",
+      },
+      ...
+    ]
+    ```
   - **404 Not Found**: Returns an error message if the User is not found.
 
 ### 3. Create a User
 - **URL**: `/api/users`
 - **Method**: `POST`
-- **Parameters**: `Login Credentials` in Header (optional)
+- **Parameters**: `Login Credentials` in Header 
 - **Description**: Add a new User to the SQL database.
 - **Request Body** (JSON):
   ```json
@@ -250,7 +269,7 @@ Accepted Auth Logins
 - **URL**: `/api/users/{userId}`
 - **Method**: `DELETE`
 - **Parameters**:
-  - `Login Credentials` in Header (optional)
+  - `Login Credentials` in Header 
   - `userId`: Integer. The ID of the User to delete.
 - **Description**: Delete a User by their ID.
 - **Response**:
@@ -306,7 +325,7 @@ Accepted Auth Logins
 ### 3. Create a TrailPoint
 - **URL**: `/api/trailpoints`
 - **Method**: `POST`
-- **Parameters**: `Login Credentials` in Header (optional)
+- **Parameters**: `Login Credentials` in Header 
 - **Description**: Add a new TrailPoint to the SQL database.
 - **Request Body** (JSON):
   ```json
@@ -332,7 +351,7 @@ Accepted Auth Logins
 - **URL**: `/api/trailpoints/{trailPointId}`
 - **Method**: `POST`
 - **Parameters**:
-  - `Login Credentials` in Header (optional)
+  - `Login Credentials` in Header 
   - `trailPointId`: Integer. The ID of the TrailPoint to update.
 - **Description**: Update an existing TrailPoint in the SQL database.
 - **Request Body** (JSON):
@@ -348,10 +367,7 @@ Accepted Auth Logins
   - **Example Response**:
     ```json
     {
-      "TrailPointid": 1,
-      "TrailPointLatitude": 50.3755,
-      "TrailPointLongitude": -4.1427,
-      "NextTrailPointid": 2
+        "message" : "TrailPoint 1 Updated"
     }
     ```
   - **404 Not Found**: Returns an error message if the TrailPoint is not found.
@@ -360,7 +376,7 @@ Accepted Auth Logins
 - **URL**: `/api/trailpoints/{trailPointId}`
 - **Method**: `DELETE`
 - **Parameters**:
-  - `Login Credentials` in Header (optional)
+  - `Login Credentials` in Header
   - `trailPointId`: Integer. The ID of the TrailPoint to delete.
 - **Description**: Delete a TrailPoint by its ID.
 - **Response**:
