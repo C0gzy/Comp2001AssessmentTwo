@@ -76,6 +76,27 @@ components:
         - Email
         - Password
         - UserPermissionLevel
+    TrailPoint:
+      type: object
+      properties:
+        TrailPointid:
+          type: integer
+          description: "Unique identifier for the trail point."
+        TrailPointLatitude:
+          type: number
+          format: float
+          description: "Latitude of the trail point."
+        TrailPointLongitude:
+          type: number
+          format: float
+          description: "Longitude of the trail point."
+        NextTrailPointid:
+          type: integer
+          description: "Identifier for the next trail point."
+      required:
+        - TrailPointid
+        - TrailPointLatitude
+        - TrailPointLongitude
     Userlogin:
       type: object
       properties:
@@ -99,7 +120,7 @@ paths:
       parameters:
         - name: "LoginData"
           in: "header"
-          required: true
+          required: false
           content:
             application/json:
               schema:
@@ -118,6 +139,14 @@ paths:
                 items:
                   $ref: "#/components/schemas/Trail"
     post:
+      parameters:
+        - name: "LoginData"
+          in: "header"
+          required: false
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Userlogin"
       summary: "Create a new trail"
       operationId: "TrailHandler.Create"
       tags:
@@ -161,6 +190,13 @@ paths:
           schema:
             type: "string"
           description: "ID of the trail to get"
+        - name: "LoginData"
+          in: "header"
+          required: false
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Userlogin"
       responses:
         '200':
           description: "Trail found"
@@ -171,8 +207,47 @@ paths:
         '404':
           description: "Trail not found"     
 
+    post:
+      summary: "Update a trail by ID"
+      operationId: "TrailHandler.Update"
+      tags:
+        - "trails"
+      parameters:
+        - name: "trailId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+          description: "ID of the trail to update"
+        - name: "LoginData"
+          in: "header"
+          required: false
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Userlogin"
+      requestBody:
+        required: true
+        x-body-name: "UpdatedTrail"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Trail"
+      responses:
+        '200':
+          description: "Trail updated"
+        '404':
+          description: "Trail not found"
 
     delete:
+      parameters:
+        - name: "LoginData"
+          in: "header"
+          required: false
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Userlogin"
       summary: "Delete a trail by ID"
       operationId: "TrailHandler.Delete"
       tags:
@@ -192,6 +267,14 @@ paths:
   
   /users:
     get:
+      parameters:
+        - name: "LoginData"
+          in: "header"
+          required: false
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Userlogin"
       operationId: "UserHandler.ReadAll"
       summary: "Get all users"
       tags:
@@ -208,6 +291,14 @@ paths:
     post:
       summary: "Create a new user"
       operationId: "UserHandler.Create"
+      parameters:
+        - name: "LoginData"
+          in: "header"
+          required: false
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Userlogin"
       tags:
         - "users"
       requestBody:
@@ -239,6 +330,14 @@ paths:
     get:
       operationId: "UserHandler.ReadOne"
       summary: "Get a user by ID"
+      parameters:
+        - name: "LoginData"
+          in: "header"
+          required: false
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Userlogin"
       tags:
         - "users"
       parameters:
@@ -258,6 +357,14 @@ paths:
         '404':
           description: "User not found"
     delete:
+      parameters:
+        - name: "LoginData"
+          in: "header"
+          required: false
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Userlogin"
       summary: "Delete a user by ID"
       operationId: "UserHandler.Delete"
       tags:
@@ -274,3 +381,133 @@ paths:
           description: "User deleted"
         '404':
           description: "User not found"
+
+  /trailpoints:
+    get:
+      operationId: "TrailPointHandler.ReadAll"
+      summary: "Get all trail points"
+      tags:
+        - "trailpoints"
+      responses:
+        '200':
+          description: "A list of trail points"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/TrailPoint"
+    post:
+      parameters:
+        - name: "LoginData"
+          in: "header"
+          required: false
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Userlogin"
+      summary: "Create a new trail point"
+      operationId: "TrailPointHandler.Create"
+      tags:
+        - "trailpoints"
+      requestBody:
+        required: true
+        x-body-name: "NewTrailPoint"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TrailPoint"
+      responses:
+        '201':
+          description: "Trail point created"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Name:
+                    type: string
+        '400':
+          description: "Invalid input"
+        '406':
+          description: "Trail point Already Exists"
+        '500':
+          description: "Internal server error"
+
+  /trailpoints/{trailPointId}:
+    get:
+      operationId: "TrailPointHandler.ReadOne"
+      summary: "Get a trail point by ID"
+      tags:
+        - "trailpoints"
+      parameters:
+        - name: "trailPointId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+          description: "ID of the trail point to get"
+      responses:
+        '200':
+          description: "Trail point found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TrailPoint"
+        '404':
+          description: "Trail point not found"
+    delete:
+      summary: "Delete a trail point by ID"
+      operationId: "TrailPointHandler.Delete"
+      tags:
+        - "trailpoints"
+      parameters:
+        - name: "trailPointId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+          description: "ID of the trail point to delete"
+        - name: "LoginData"
+          in: "header"
+          required: false
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Userlogin"
+      responses:
+        '200':
+          description: "Trail point deleted"
+        '404':
+          description: "Trail point not found"
+    post:
+      summary: "Update a trail point by ID"
+      operationId: "TrailPointHandler.Update"
+      tags:
+        - "trailpoints"
+      parameters:
+        - name: "trailPointId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+          description: "ID of the trail point to update"
+        - name: "LoginData"
+          in: "header"
+          required: false
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Userlogin"
+      requestBody:
+        required: true
+        x-body-name: "UpdatedTrailPoint"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TrailPoint"
+      responses:
+        '200':
+          description: "Trail point updated"
+        '404':
+          description: "Trail point not found"
