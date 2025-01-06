@@ -4,7 +4,12 @@
 >[!IMPORTANT]
 >This program uses Docker and DockerImage to run please install Docker before attempting to run it
 
+docker image can be found here (https://hub.docker.com/repository/docker/tomcogzell/comp2001/general) or at tomcogzell/comp2001:tagname
 
+## To run docker image
+```
+    docker run -p 3000:3000 tomcogzell/comp2001:tagname
+```
 ## How To Use
 - connection point is at: (http://localhost:3000/api/ui).
 - Connect to University network to access SQL database
