@@ -32,10 +32,10 @@ class User(db.Model):
 
 class TrailPoint(db.Model):
     __tablename__ = "TRAILPOINT"
-    TrailPointid = db.Column(db.Integer, primary_key=True)
+    TrailPointid = db.Column(db.Integer, primary_key=True, autoincrement=False) 
     TrailPointLatitude = db.Column(db.Float)
     TrailPointLongitude = db.Column(db.Float)
-    NextTrailPointid = db.Column(db.Integer, db.ForeignKey("TRAILPOINT.TrailPointid"))
+    NextTrailPointid = db.Column(db.Integer, db.ForeignKey("TRAILPOINT.TrailPointid"), nullable=True)
 
 
 class TrailSchema(ma.SQLAlchemyAutoSchema):

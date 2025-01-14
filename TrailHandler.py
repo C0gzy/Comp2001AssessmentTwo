@@ -25,7 +25,7 @@ def ReadOne(trailId):
 
         return Trail_Schema.dump(ReadTrail) , 200
     else:
-        return NULL , 404
+        return {"response" : "Trail not found or doesn't exist"} , 404
 
 # This function will create a new Trail
 def Create(NewTrail):
@@ -60,7 +60,7 @@ def Create(NewTrail):
     else:
         abort(406, "Trail already exists")
 
-    return NULL , 500
+    return {"response" : "Internal Server Error"} , 500
 
 # This function will update the Trail with the given trailId
 def Update(trailId,UpdatedTrail):
@@ -75,7 +75,7 @@ def Update(trailId,UpdatedTrail):
     if TrailToUpdate:
         # Update the Trail
         TrailToUpdate.TrailName = UpdatedTrail.get("TrailName")
-        TrailToUpdate.TrailOwnerId = trailId
+        TrailToUpdate.TrailOwnerId = TrailToUpdate.TrailOwnerId
         TrailToUpdate.TrailElevationgain = UpdatedTrail.get("TrailElevationgain")
         TrailToUpdate.TrailImageFileLocation = UpdatedTrail.get("TrailImageFileLocation")
         TrailToUpdate.TrailLength = UpdatedTrail.get("TrailLength")

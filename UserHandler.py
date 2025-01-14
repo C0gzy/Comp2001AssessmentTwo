@@ -32,16 +32,16 @@ def ReadOne(userId):
 
         return User_Schema.dump(ReadUser) , 200
     else:
-        return "User Not Found" , 404
+        return  {"response" : "User not found or doesn't exist"}, 404
 
-# This function will update the user with the given userId
+# This function will create a new user
 def Create(NewUser):
     # Get the login data from the header
     login_header = request.headers.get("LoginData")
     
     # If the login data is not provided or the login data is invalid
     if not login_header or Userlogin(login_header) == False:
-        return "You're Not Authrised to Create a New User please provide login credientials" , 401
+        return  {"response" : "You're Not Authrised to Create a New User please provide login credientials"} , 401
 
     AlreadyExists = User.query.filter(User.username == NewUser.get("username")).one_or_none()
     
@@ -66,9 +66,9 @@ def Create(NewUser):
     else:
         abort(406, "User already exists")
 
-    return NULL , 500
+    return {"response" : "Internal Server Error"} , 500
 
-# This function will update the user with the given userId
+# This function will delete the user with the given userId
 def Delete(userId):
     # Get the login data from the header
     login_header = request.headers.get("LoginData")
@@ -88,5 +88,25 @@ def Delete(userId):
         abort(404, "User not found")
 
 
+def Update(userId,UpdatedUser):
+    # Get the login data from the header
+    login_header = request.headers.get("LoginData")
+    
+    # If the login data is not provided or the login data is invalid
+    if not login_header or Userlogin(login_header) == False:
+        return "You're Not Authrised to Update a User please provide login credientials" , 401
 
+    UserToUpdate = User.query.filter(User.Userid == userId).one_or_none()
+
+    # If the user is found
+    if UserToUpdate:
+        # Update the user
+        UserToUpdate.username = UpdatedUser.get("username")
+        UserToUpdate.Email = UpdatedUser.get("Email")
+        UserToUpdate.Password = UpdatedUser.get("Password")
+        UserToUpdate.UserPermissionLevel = UpdatedUser.get("UserPermissionLevel")
+        db.session.commit()
+        return "User "+ str(userId) +" Successfully Updated" , 200
+    else:
+        abort(404, "User not found")
    

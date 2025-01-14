@@ -16,7 +16,7 @@ def ReadOne(trailPointId):
     if ReadTrailPoint:
         return TrailPoint_Schema.dump(ReadTrailPoint) , 200
     else:
-        return NULL , 404
+        return {"response" : "TrailPoint Not Found"} , 404
 
 # This function will create a new TrailPoint
 def Create(NewTrailPoint):
@@ -37,8 +37,6 @@ def Create(NewTrailPoint):
             NextTrailPointid=NewTrailPoint.get("NextTrailPointid")
         )
         db.session.add(NewTrailPoint)
-        db.session.flush()
-        print(NewTrailPoint.TrailPointid)
         db.session.commit()
         
 
@@ -46,7 +44,7 @@ def Create(NewTrailPoint):
     else:
         abort(406, "TrailPoint already exists")
 
-    return NULL , 500
+    return {"Response" : "Internal Server Error"} , 500
 
 # This function will delete the TrailPoint with the given TrailPointId
 def Delete(trailPointId):
@@ -62,7 +60,7 @@ def Delete(trailPointId):
         db.session.commit()
         return make_response(f"TrailPoint with id {trailPointId} has been deleted", 200)
     else:
-        return NULL , 404
+        return {"response" : "Trail not found"} , 404
 
 # This function will update the TrailPoint with the given TrailPointId
 def Update(trailPointId, UpdateTrailPoint):
@@ -81,4 +79,4 @@ def Update(trailPointId, UpdateTrailPoint):
         db.session.commit()
         return TrailPoint_Schema.dump(ReadTrailPoint) , 200
     else:
-        return NULL , 404
+        return {"response" : "Trail not found"} , 404

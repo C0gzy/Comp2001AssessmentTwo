@@ -91,10 +91,10 @@ components:
           format: float
           description: "Longitude of the trail point."
         NextTrailPointid:
+          nullable: true
           type: integer
           description: "Identifier for the next trail point."
       required:
-        - TrailPointid
         - TrailPointLatitude
         - TrailPointLongitude
     Userlogin:
@@ -207,7 +207,7 @@ paths:
         '404':
           description: "Trail not found"     
 
-    post:
+    put:
       summary: "Update a trail by ID"
       operationId: "TrailHandler.Update"
       tags:
@@ -240,14 +240,6 @@ paths:
           description: "Trail not found"
 
     delete:
-      parameters:
-        - name: "LoginData"
-          in: "header"
-          required: false
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Userlogin"
       summary: "Delete a trail by ID"
       operationId: "TrailHandler.Delete"
       tags:
@@ -259,6 +251,13 @@ paths:
           schema:
             type: "string"
           description: "ID of the trail to delete"
+        - name: "LoginData"
+          in: "header"
+          required: false
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Userlogin"
       responses:
         '200':
           description: "Trail deleted"
@@ -381,6 +380,37 @@ paths:
           description: "User deleted"
         '404':
           description: "User not found"
+    put:
+      summary: "Update a user by ID"
+      operationId: "UserHandler.Update"
+      tags:
+        - "users"
+      parameters:
+        - name: "userId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+          description: "ID of the user to update"
+        - name: "LoginData"
+          in: "header"
+          required: false
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Userlogin"
+      requestBody:
+        required: true
+        x-body-name: "UpdatedUser"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        '200':
+          description: "User updated"
+        '404':
+          description: "User not found"
 
   /trailpoints:
     get:
@@ -480,7 +510,7 @@ paths:
           description: "Trail point deleted"
         '404':
           description: "Trail point not found"
-    post:
+    put:
       summary: "Update a trail point by ID"
       operationId: "TrailPointHandler.Update"
       tags:
@@ -501,7 +531,7 @@ paths:
                 $ref: "#/components/schemas/Userlogin"
       requestBody:
         required: true
-        x-body-name: "UpdatedTrailPoint"
+        x-body-name: "UpdateTrailPoint"
         content:
           application/json:
             schema:

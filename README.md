@@ -8,10 +8,10 @@ docker image can be found here (https://hub.docker.com/repository/docker/tomcogz
 
 ## To run docker image
 ```
-    docker run -p 3000:3000 tomcogzell/comp2001:tagname
+    docker run -p 8000:8000 tomcogzell/comp2001:tagname
 ```
 ## How To Use
-- connection point is at: (http://localhost:3000/api/ui).
+- connection point is at: (http://localhost:8000/api/ui).
 - Connect to University network to access SQL database
 
 >[!TIP]
