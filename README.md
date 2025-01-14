@@ -33,6 +33,18 @@ Accepted Auth Logins
     "Password" : "ISAD123!"
 }
 ```
+```
+{
+    "Email" : "tim@plymouth.ac.uk",
+    "Password" : "COMP2001!"
+}
+```
+```
+{
+    "Email" :  "ada@plymouth.ac.uk",
+    "Password" : "insecurePassword"
+}
+```
 
 ## API Endpoints
 ### Trail
